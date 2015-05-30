@@ -13,13 +13,18 @@ fi
 
 R="${R_HOME}/bin/R"
 
-SYMPHONY_CPPFLAGS=`pkg-config --cflags SYMPHONY >/dev/null 2>&1`
-SYMPHONY_LIBS=`pkg-config --libs SYMPHONY >/dev/null 2>&1`
-## As of 2014-09-20, Debian testing/unstable has symphony.pc.
-test -z "${SYMPHONY_CPPFLAGS}" && \
-  SYMPHONY_CPPFLAGS=`pkg-config --cflags symphony >/dev/null 2>&1`
-test -z "${SYMPHONY_LIBS}" && \
-  SYMPHONY_LIBS=`pkg-config --libs symphony >/dev/null 2>&1`
+: ${PKG_CONFIG="pkg-config"}
+version=`${PKG_CONFIG} --version 2>/dev/null`
+if test -n "${version}"; then
+  if `${PKG_CONFIG} --exists SYMPHONY`; then
+    SYMPHONY_CPPFLAGS=`${PKG_CONFIG} --cflags SYMPHONY`
+    SYMPHONY_LIBS=`${PKG_CONFIG} --libs SYMPHONY`
+  elif `${PKG_CONFIG} --exists symphony`; then
+    ## As of 2014-09-20, Debian testing/unstable has symphony.pc.
+    SYMPHONY_CPPFLAGS=`${PKG_CONFIG} --cflags symphony`
+    SYMPHONY_LIBS=`${PKG_CONFIG} --libs symphony`
+  fi
+fi
 test -z "${SYMPHONY_LIBS}" && \
   SYMPHONY_LIBS="-lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils"
 
