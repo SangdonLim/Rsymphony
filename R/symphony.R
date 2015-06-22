@@ -1,4 +1,4 @@
-Rsymphony_solve_LP<-
+Rsymphony_solve_LP <-
 function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
          verbosity = -2, time_limit = -1, node_limit = -1, gap_limit = -1,
          first_feasible = FALSE, write_lp = FALSE, write_mps = FALSE)
@@ -35,7 +35,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         if(!is.character(types) || !all(types %in% c("C", "I", "B")))
             stop("Invalid 'types' argument.")
         types <- rep(types, length.out = nc)
-        col_ub[types == "B"] <- 1
+        col_ub[types == "B" & (col_ub > 1)] <- 1
         types != "C"
     }
 
