@@ -1,4 +1,4 @@
-a1528b8876ebf4b6ba7ed30d4c52120d *DESCRIPTION
+271dbe37187a6b61e3c6e67c16055e4a *DESCRIPTION
 0a3ffe8d559ed5df02d8ef64f3877152 *NAMESPACE
 ca94b8ae798cfeee2b472048ccb41970 *R/bounds.R
 fb6755bddba1af7817314682e8448369 *R/sparse.R
@@ -8,5 +8,5 @@ b816ea6d4682f3789da3bff775aa922a *configure
 d41d8cd98f00b204e9800998ecf8427e *configure.win
 a93140f5020e7b59d1894f944100989e *man/Rsymphony_solve.Rd
 764292063a596ca26fdcd99fd5de16c1 *src/Makevars.in
-c154c214d727c184fa92e40536916fcf *src/Makevars.win
+67cc5037504d878e1f2a0cb34ba6dea3 *src/Makevars.win
 6362a4c64aefeaba6e860bd2b15d5864 *src/R_symphony.cc
