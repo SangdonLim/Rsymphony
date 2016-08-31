@@ -18,6 +18,13 @@ function(x)
         stop("Argument 'x' must be a matrix.")
    
     ind <- which(x != 0, arr.ind = TRUE)
+    if(!length(ind)) {
+        ## As of 2016-08-29, the above gives integer(0) instead of a
+        ## matrix in case x has zero rows or cols, because x != 0 drops
+        ## dimensions ...
+        ind <- matrix(ind, 0L, 2L)
+    }
+    
     list(matbeg = c(0L, cumsum(tabulate(ind[, 2L], ncol(x)))),
          matind = ind[, 1] - 1L,
          values = x[ind])

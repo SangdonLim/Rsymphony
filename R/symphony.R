@@ -6,9 +6,25 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
     ## Direction of optimization.
     if(!identical(max, TRUE) && !identical(max, FALSE))
         stop("'Argument 'max' must be either TRUE or FALSE.")
-  
+
+    ## Be nice.
+    if(missing(mat) || is.null(mat))
+        mat <- matrix(0, 0L, length(obj))
+    if(missing(dir) || is.null(dir))
+        dir <- character()
+    if(missing(rhs) || is.null(rhs))
+        rhs <- numeric()
+    
     nr <- nrow(mat)
     nc <- ncol(mat)
+
+    ## Sanity checking.
+    if(length(obj) != nc)
+        stop("Arguments 'obj' and 'mat' are not conformable.")
+    if(length(dir) != nr)
+        stop("Arguments 'mat' and 'dir' are not conformable.")
+    if(length(rhs) != nr)
+        stop("Arguments 'mat' and 'rhs' are not conformable.")
 
     ## Handle directions of constraints.
     TABLE <- c("L", "L", "E", "G", "G")
@@ -25,7 +41,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         replace(bounds[, 2L], bounds[, 2L] == -Inf, -.Machine$double.xmax)
     col_ub <-
         replace(bounds[, 3L], bounds[, 3L] == Inf, .Machine$double.xmax)
-  
+
     ## Note that the integer spec passed on is a vector of integer
     ## indicators, and that SYMPHONY has no native support for *binary*
     ## variables, so we pass treat these as integers <= 1.
@@ -39,8 +55,24 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         types != "C"
     }
 
+    ## If there are no non-zero elements in mat, the C code called
+    ## segfaults in sym_close_environment().  Prevent this by adding a
+    ## dummy variable.  Argh.
+    need_dummy <- all(mat == 0)
+    if(need_dummy) {
+        obj <- c(obj, 0)
+        mat <- rbind(c(double(nc), 1))
+        row_sense <- "E"
+        rhs <- 0
+        types <- c(types, "C")
+        col_lb <- c(col_lb, 0)
+        col_ub <- c(col_ub, 0)
+        nr <- 1L
+        nc <- length(obj)
+    }
+
     mat <- make_csc_matrix(mat)
-  
+
     ## Call the C interface.
     out <- .C("R_symphony_solve",
               as.integer(nc),
@@ -70,6 +102,11 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
     ## Ensure that integer variables are really integer:
     solution <- out$solution
     solution[int] <- round(solution[int])
+
+    if(need_dummy) {
+        solution <- solution[-nc]
+        obj <- obj[-nc]
+    }
     
     status_db <- 
         c("TM_NO_PROBLEM" = 225L,
