@@ -61,6 +61,6 @@ glp_bounds_check_sanity <- function(x, n){
     stop("Length of bound indices must be equal to the length of the corresponding bound values!")
   if(any(duplicated(x[[1]])))
     stop("Duplicated entries in bound indices found!")
-  if((max(x[[1]]) > n))
+  if((any(x[[1]]) > n))
     stop("Bound indices must not exceed number of objective coefficients!")
 }
