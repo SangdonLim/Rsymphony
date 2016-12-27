@@ -56,6 +56,17 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
    sym_set_int_param(env, "write_lp", *write_lp);
    sym_set_int_param(env, "write_mps", *write_mps);
 
+   /* If SYMPHONY was compiled with OpenMP support, sym_solve() uses
+    * omp_get_num_procs() to set max_active_nodes if unset (still -1),
+    * resulting in segfaults if env var OMP_THREAD_LIMIT is set to
+    * something smaller than the number of processors/cores.
+    * Unfortunately, it seems there is no way to determine whether
+    * SYMPHONY was compiled with OpenMP support (and hence re-set
+    * max_active_nodes as necessary), so the best we can do is always
+    * set max_active_nodes to 1 (turning off OpenMP parallelization).
+    */
+   sym_set_int_param(env, "max_active_nodes", 1);
+
    /* Solve the integer program. */
    sym_solve(env);
 
