@@ -1,8 +1,8 @@
-4dedd28e84852a75eb94229c3978e06f *DESCRIPTION
-0a3ffe8d559ed5df02d8ef64f3877152 *NAMESPACE
+d29b703f39050319793313fa06df5c1d *DESCRIPTION
+98bbbe4de0840eb5be78ed7000f6f98d *NAMESPACE
 b20fefaaf31f938721b136eb2fd39aaf *R/bounds.R
 c284500b54b5c13e083e999057c70b64 *R/sparse.R
-0e2df6c944f45515a99da34e6927f935 *R/symphony.R
+02dc4a8cb3df78d884330c4ec236e970 *R/symphony.R
 3d56c394530c4f14eb5213871ba5b1ac *cleanup
 b816ea6d4682f3789da3bff775aa922a *configure
 d41d8cd98f00b204e9800998ecf8427e *configure.win
@@ -10,3 +10,4 @@ a93140f5020e7b59d1894f944100989e *man/Rsymphony_solve.Rd
 764292063a596ca26fdcd99fd5de16c1 *src/Makevars.in
 67cc5037504d878e1f2a0cb34ba6dea3 *src/Makevars.win
 0587c3b991916e36647c5a97f49c878f *src/R_symphony.cc
+b885f312e212f1deab21d06a53b0689c *src/init.c

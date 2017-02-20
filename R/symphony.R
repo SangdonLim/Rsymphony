@@ -74,7 +74,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
     mat <- make_csc_matrix(mat)
 
     ## Call the C interface.
-    out <- .C("R_symphony_solve",
+    out <- .C(R_symphony_solve,
               as.integer(nc),
               as.integer(nr),
               as.integer(mat$matbeg),

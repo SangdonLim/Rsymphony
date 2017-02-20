@@ -1,4 +1,4 @@
-useDynLib("Rsymphony")
+useDynLib("Rsymphony", .registration = TRUE)
 
 export("Rsymphony_solve_LP")
 
