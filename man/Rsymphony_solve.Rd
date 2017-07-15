@@ -15,8 +15,8 @@ Rsymphony_solve_LP(obj, mat, dir, rhs, bounds = NULL, types = NULL,
   \item{obj}{a vector with the objective coefficients}
   \item{mat}{a vector or a matrix of the constraint coefficients}
   \item{dir}{a character vector with the directions of the constraints.
-    Each element must be one of \code{"<"}, \code{"<="}, \code{">"},
-    \code{">="}, \code{"=="} or \code{"!="}.}
+    Each element must be one of \code{"<="}, \code{"=="} or
+    \code{">="}.}
   \item{rhs}{the right hand side of the constraints}
   \item{bounds}{\code{NULL} (default) or a list with elements
     \code{upper} and \code{lower} containing the indices and

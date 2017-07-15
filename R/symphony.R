@@ -27,11 +27,11 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         stop("Arguments 'mat' and 'rhs' are not conformable.")
 
     ## Handle directions of constraints.
-    TABLE <- c("L", "L", "E", "G", "G")
-    names(TABLE) <- c('<', '<=', "==", ">", ">=")
+    TABLE <- c("L", "E", "G")
+    names(TABLE) <- c("<=", "==", ">=")
     row_sense <- TABLE[dir]
     if(any(is.na(row_sense)))
-        stop("Argument 'dir' must be one of '<', '<=', '>', '>=', or '=='.")
+        stop("Argument 'dir' must be one of '<=', '==' or '>='.")
   
     ## Bounding support with using Rglpk bounds for the time being.
     bounds <- glp_bounds(as.list(bounds), nc)
