@@ -14,6 +14,8 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         dir <- character()
     if(missing(rhs) || is.null(rhs))
         rhs <- numeric()
+    if((length(dim(mat)) != 2L) && is.numeric(mat))
+        mat <- matrix(c(mat), nrow = 1L)
     
     nr <- nrow(mat)
     nc <- ncol(mat)
@@ -55,13 +57,17 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         types != "C"
     }
 
+    mat <- make_csc_matrix(mat)    
+
     ## If there are no non-zero elements in mat, the C code called
     ## segfaults in sym_close_environment().  Prevent this by adding a
     ## dummy variable.  Argh.
-    need_dummy <- all(mat == 0)
+    need_dummy <- (length(mat$values) == 0L)
     if(need_dummy) {
         obj <- c(obj, 0)
-        mat <- rbind(c(double(nc), 1))
+        mat <- make_csc_matrix(rbind(c(double(nc), 1)))
+        ## Alternatively, use
+        ##   list(matbeg = c(integer(nc + 1L), 1L), matind = 0L, values = 1)
         row_sense <- "E"
         rhs <- 0
         types <- c(types, "C")
@@ -70,8 +76,6 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         nr <- 1L
         nc <- length(obj)
     }
-
-    mat <- make_csc_matrix(mat)
 
     ## Call the C interface.
     out <- .C(R_symphony_solve,

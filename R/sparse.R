@@ -17,7 +17,7 @@ function(x)
     if(!is.matrix(x))
         stop("Argument 'x' must be a matrix.")
    
-    ind <- which(x != 0, arr.ind = TRUE)
+    ind <- which(x != 0, arr.ind = TRUE, useNames = FALSE)
     if(!length(ind)) {
         ## As of 2016-08-29, the above gives integer(0) instead of a
         ## matrix in case x has zero rows or cols, because x != 0 drops
@@ -43,4 +43,47 @@ function(x)
     list(matbeg = c(0L, cumsum(tabulate(x$j[ind], x$ncol))),
          matind = x$i[ind] - 1L,
          values = x$v[ind])
+}
+
+make_csc_matrix.dgCMatrix <- 
+function(x) 
+{
+    list(matbeg = x@p, matind = x@i, values = x@x)
+}
+
+make_csc_matrix.matrix.csc <- 
+function(x) 
+{
+    list(matbeg = x@ia - 1L, matind = x@ja - 1L, values = x@ra)
+}
+
+make_csc_matrix.dgTMatrix <-
+function(x)
+{
+    ind <- order(x@j, x@i)
+    list(matbeg = c(0L, cumsum(tabulate(x@j[ind] + 1L, x@Dim[2L]))),
+         matind = x@i[ind],
+         values = x@x[ind])
+}
+
+make_csc_matrix.matrix.coo <-
+function(x)
+{
+    ind <- order(x@ja, x@ia)
+    list(matbeg = c(0L, cumsum(tabulate(x@ja[ind], x@dimension[2L]))),
+         matind = x@ia[ind] - 1L,
+         values = x@ra[ind])
+}
+
+make_csc_matrix.dgRMatrix <-
+function(x) {
+    x <- Matrix::t(x)
+    list(matbeg = x@p, matind = x@j, values = x@x)
+}
+
+make_csc_matrix.matrix.csr <-
+function(x)
+{
+    x <- SparseM::t(x)
+    list(matbeg = x@ia - 1L, matind = x@ja - 1L, values = x@ra)
 }
