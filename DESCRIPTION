@@ -1,5 +1,5 @@
 Package: Rsymphony
-Version: 0.1-30
+Version: 0.1-31
 Title: SYMPHONY in R
 Description: An R interface to the SYMPHONY solver for mixed-integer linear programs.
 Authors@R: c(person("Reinhard", "Harter", role = "aut"),
@@ -18,7 +18,7 @@ URL: http://R-Forge.R-project.org/projects/rsymphony,
         https://projects.coin-or.org/SYMPHONY,
         https://www.coin-or.org/download/source/SYMPHONY/
 NeedsCompilation: yes
-Packaged: 2021-03-16 11:46:13 UTC; hornik
+Packaged: 2021-04-06 10:46:23 UTC; hornik
 Author: Reinhard Harter [aut],
   Kurt Hornik [aut, cre] (<https://orcid.org/0000-0003-4198-9911>),
   Stefan Theussl [aut],
@@ -26,4 +26,4 @@ Author: Reinhard Harter [aut],
   Florian Schwendinger [ctb]
 Maintainer: Kurt Hornik <Kurt.Hornik@R-project.org>
 Repository: CRAN
-Date/Publication: 2021-03-20 11:30:53 UTC
+Date/Publication: 2021-04-06 14:07:06 UTC

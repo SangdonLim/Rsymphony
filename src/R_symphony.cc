@@ -49,7 +49,7 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
 			     *row_sense, row_rhs, row_range, TRUE);
  	 
    /* Set optimization parameters. */
-   if( *time_limit>0 ) sym_set_dbl_param(env, "time_limit", *time_limit);
+   if( *time_limit>0 ) sym_set_int_param(env, "time_limit", *time_limit);
    if( *node_limit>0 ) sym_set_int_param(env, "node_limit", *node_limit);
    if( *gap_limit>0 ) sym_set_dbl_param(env, "gap_limit", *gap_limit);
    sym_set_int_param(env, "find_first_feasible", *first_feasible);

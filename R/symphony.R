@@ -71,6 +71,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         row_sense <- "E"
         rhs <- 0
         types <- c(types, "C")
+        int <- c(int, FALSE)
         col_lb <- c(col_lb, 0)
         col_ub <- c(col_ub, 0)
         nr <- 1L
@@ -91,7 +92,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
               obj2 = double(nc),              
               as.character(paste(row_sense, collapse = "")),
               as.double(rhs),
-              double(),
+              double(nr),
               objval = double(1L),
               solution = double(nc),
               status = integer(1L),
