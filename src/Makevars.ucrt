@@ -1,0 +1,2 @@
+SYMPHONY_LIBS = -lSym -lCgl -lOsiClp -lClp -lOsi -lCoinUtils -lz -lbz2 -fopenmp
+PKG_LIBS = $(SYMPHONY_LIBS) $(BLAS_LIBS) $(LAPACK_LIBS)
