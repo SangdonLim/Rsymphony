@@ -20,7 +20,7 @@ glp_bounds <- function(x, n){
   ##  stop("Bounds have to be of type list")
 
   ## Initialize default matrix
-  bound_table <- expand.grid(type=rep.int(2L,n), upper=0.0, lower=Inf)
+  bound_table <- expand.grid(type=rep.int(2L,n), lower=0.0, upper=Inf)
   class(bound_table) <- c("bound_table", class(bound_table))
   
   ## Lower bounds
