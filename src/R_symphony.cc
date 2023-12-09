@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------*/
 /*
-  This is an example of using SYMPHONY to construct and solve 
+  This is an example of using SYMPHONY to construct and solve
   a simple MILP.
   Therefore 2 functions are defined which are prepared to be compiled as an
   shared object and then called by R with all the parameters that set up
@@ -14,7 +14,7 @@
 
 extern "C" {
 
-void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index, 
+void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
 		      double *value, double *col_lb, double *col_ub,
 		      int* is_int, double *objective, double *obj2,
 		      char **row_sense, double *row_rhs,
@@ -26,10 +26,10 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
 )
 {
    int i;
-   
+
    /* Create a SYMPHONY environment */
    sym_environment *env = sym_open_environment();
-   
+
    /* Set verbosity to desired level */
    sym_set_int_param(env, "verbosity", *verbosity);
 
@@ -47,7 +47,7 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
    sym_explicit_load_problem(env, *n_cols, *n_rows, start, index, value,
 			     col_lb, col_ub, int_vars, objective, NULL,
 			     *row_sense, row_rhs, row_range, TRUE);
- 	 
+
    /* Set optimization parameters. */
    if( *time_limit>0 ) sym_set_int_param(env, "time_limit", *time_limit);
    if( *node_limit>0 ) sym_set_int_param(env, "node_limit", *node_limit);
@@ -76,9 +76,9 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
 
    sym_get_col_solution(env, solution);
    sym_get_obj_val(env, &objective_value);
-   
+
    *obj_final = objective_value;
-   for(i=0; i < (*n_cols); i++)	
+   for(i=0; i < (*n_cols); i++)
      sol_final[i] = solution[i];
 
    *solve_status = sym_get_status(env);

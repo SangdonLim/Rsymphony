@@ -16,7 +16,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         rhs <- numeric()
     if((length(dim(mat)) != 2L) && is.numeric(mat))
         mat <- matrix(c(mat), nrow = 1L)
-    
+
     nr <- nrow(mat)
     nc <- ncol(mat)
 
@@ -34,7 +34,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
     row_sense <- TABLE[dir]
     if(any(is.na(row_sense)))
         stop("Argument 'dir' must be one of '<=', '==' or '>='.")
-  
+
     ## Bounding support with using Rglpk bounds for the time being.
     bounds <- glp_bounds(as.list(bounds), nc)
     ## Use machine's max double values for infinities for the time being
@@ -57,7 +57,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         types != "C"
     }
 
-    mat <- make_csc_matrix(mat)    
+    mat <- make_csc_matrix(mat)
 
     ## If there are no non-zero elements in mat, the C code called
     ## segfaults in sym_close_environment().  Prevent this by adding a
@@ -89,7 +89,7 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
               as.double(col_ub),
               as.integer(int),
               if(max) as.double(-obj) else as.double(obj),
-              obj2 = double(nc),              
+              obj2 = double(nc),
               as.character(paste(row_sense, collapse = "")),
               as.double(rhs),
               double(nr),
@@ -112,8 +112,8 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         solution <- solution[-nc]
         obj <- obj[-nc]
     }
-    
-    status_db <- 
+
+    status_db <-
         c("TM_NO_PROBLEM" = 225L,
           "TM_NO_SOLUTION" = 226L,
           "TM_OPTIMAL_SOLUTION_FOUND" = 227L,
@@ -139,10 +139,10 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
         c("TM_OPTIMAL_SOLUTION_FOUND" = 0L)
     else
         status_db[match(out$status, status_db)]
-    
+
     list(solution = solution,
          objval = sum(obj * solution),
          ## Equivalently,
          ##   if(max) - out$objval else out$objval
          status = status)
-}        
+}

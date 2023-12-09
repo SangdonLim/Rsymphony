@@ -2,7 +2,7 @@
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 
-void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index, 
+void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
                       double *value, double *col_lb, double *col_ub,
                       int* is_int, double *objective, double *obj2,
                       char **row_sense, double *row_rhs,
