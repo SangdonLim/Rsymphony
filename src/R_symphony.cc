@@ -11,6 +11,7 @@
 
 #include <coin/symphony.h>
 #include <R.h>
+#include "coin/CoinHelperFunctions.hpp"
 
 extern "C" {
 
@@ -22,7 +23,7 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
 		      double *sol_final, int *solve_status,
           int *verbosity, int *time_limit, int *node_limit,
           double *gap_limit, int *first_feasible, int *write_lp,
-          int *write_mps
+          int *write_mps, int *random_seed
 )
 {
    int i;
@@ -32,6 +33,18 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
 
    /* Set verbosity to desired level */
    sym_set_int_param(env, "verbosity", *verbosity);
+
+   /* Set flags to help making results reproducible */
+   CoinDrand48(true, *random_seed);
+   sym_set_dbl_param(env, "mc_compare_solution_tolerance", 0.0);
+   sym_set_dbl_param(env, "unconditional_dive_frac", 2.0);
+   sym_set_dbl_param(env, "no_cut_timeout", -1);
+   sym_set_int_param(env, "prep_level", -1);
+   sym_set_int_param(env, "prep_iter_limit", -1);
+   sym_set_int_param(env, "rel_br_override_default", 0);
+   sym_set_int_param(env, "limit_strong_branching_time", 0);
+   sym_set_int_param(env, "fp_enabled", -1);
+   sym_set_int_param(env, "generate_cgl_cuts", 0);
 
    /* Set if integer */
    char * int_vars = (char *) malloc (sizeof(char) * (*n_cols));

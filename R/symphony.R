@@ -1,7 +1,8 @@
 Rsymphony_solve_LP <-
 function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
          verbosity = -2, time_limit = -1, node_limit = -1, gap_limit = -1,
-         first_feasible = FALSE, write_lp = FALSE, write_mps = FALSE)
+         first_feasible = FALSE, write_lp = FALSE, write_mps = FALSE,
+         random_seed = 42)
 {
     ## Direction of optimization.
     if(!identical(max, TRUE) && !identical(max, FALSE))
@@ -102,7 +103,8 @@ function(obj, mat, dir, rhs, bounds = NULL, types = NULL, max = FALSE,
               gap_limit = as.double(gap_limit),
               first_feasible = as.integer(first_feasible),
               write_lp = as.integer(write_lp),
-              write_mps = as.integer(write_mps))
+              write_mps = as.integer(write_mps),
+              random_seed = as.integer(random_seed))
 
     ## Ensure that integer variables are really integer:
     solution <- out$solution

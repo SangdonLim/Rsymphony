@@ -10,10 +10,10 @@ void R_symphony_solve(int *n_cols, int *n_rows, int *start, int *index,
                       double *sol_final, int *solve_status,
 		      int *verbosity, int *time_limit, int *node_limit,
 		      double *gap_limit, int *first_feasible, int *write_lp,
-		      int *write_mps);
+		      int *write_mps, int *random_seed);
 
 static const R_CMethodDef CEntries[] = {
-    {"R_symphony_solve", (DL_FUNC) &R_symphony_solve, 23},
+    {"R_symphony_solve", (DL_FUNC) &R_symphony_solve, 24},
     {NULL, NULL, 0}
 };
 
