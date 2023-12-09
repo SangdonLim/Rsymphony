@@ -1,5 +1,5 @@
 Package: Rsymphony
-Version: 0.1-33
+Version: 0.1-33-9000
 Title: SYMPHONY in R
 Description: An R interface to the SYMPHONY solver for mixed-integer linear programs.
 Authors@R: c(person("Reinhard", "Harter", role = "aut"),
